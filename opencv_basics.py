@@ -1,10 +1,10 @@
 import cv2 as cv
 import numpy as np
 
-img1 = cv.imread('100.jpg')
-img2 = cv.imread('400.jpg')
-img3 = cv.imread('418.jpg')
-img4 = cv.imread('102.jpg')
+img1 = cv.imread('Basics_Images/100.jpg')
+img2 = cv.imread('Basics_Images/400.jpg')
+img3 = cv.imread('Basics_Images/418.jpg')
+img4 = cv.imread('Basics_Images/102.jpg')
 
 # Resize all images to the same size
 img1 = cv.resize(img1, (300, 300))
