@@ -45,3 +45,18 @@ def pixellate(img):
     cv.imshow("Image", img)
     cv.waitKey(0)
     cv.destroyAllWindows()
+
+def avg_color_of_img(img):
+    r_total = 0
+    g_total = 0
+    b_total = 0
+    n_pixels = 0
+    for row in img:
+        for p in row:
+            r_total += p[0]
+            g_total += p[1]
+            b_total += p[2]
+
+            n_pixels += 1
+
+    return (r_total / n_pixels, g_total / n_pixels, b_total / n_pixels)
