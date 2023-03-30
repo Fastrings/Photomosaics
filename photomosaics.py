@@ -6,8 +6,7 @@ library, library_path = {}, "Source_Images"
 cache = {}
 
 
-def photomosaics(filename, tile_size):
-    img = cv.imread(filename)
+def photomosaics(img, tile_size):
     img = cv.resize(img, (img.shape[1] - (img.shape[1] % tile_size), img.shape[0] - (img.shape[0] % tile_size)))
 
     for file_name in os.listdir(library_path):
@@ -35,7 +34,8 @@ def photomosaics(filename, tile_size):
     return output_image
 
 if __name__ == "__main__":
-    img = photomosaics(sys.argv[1], int(sys.argv[2]))
+    input_img = cv.imread(sys.argv[1])
+    img = photomosaics(input_img, int(sys.argv[2]))
     img = cv.resize(img, (500, 500))
     og = cv.imread(sys.argv[1])
     og = cv.resize(og, (500, 500))
