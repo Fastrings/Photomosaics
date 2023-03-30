@@ -11,11 +11,11 @@ def process_image():
     try:
         if 'image' not in request.files:
             return Response('No image file uploaded', status=400)
-        if 'text' not in request.form:
+        if 'tile_size' not in request.form:
             return Response('No text data provided', status=400)
 
         img = request.files['image'].read()
-        text = request.form['text']
+        text = request.form['tile_size']
         npimg = np.frombuffer(img, np.uint8)
         
         img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
