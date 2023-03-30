@@ -2,6 +2,10 @@
 
 Learning the basics of image processing by implementing a basic photomosaics program using OpenCV.
 
+## PREREQUISITES
+
+This project uses packages that are not in the python standard library, meaning it is needed to install them (using pip for example). Please refer to the [requirements](requirements.txt) file for a list of all the packages needed to make the project work properly.
+
 ## HOW TO USE
 
 Add all the images you want to see in the final results to the [source](Source_Images) folder. <br>
