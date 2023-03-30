@@ -1,6 +1,6 @@
 # PHOTOMOSAICS
 
-Learning the basics of image processing by implementing a basic photomosaics program using OpenCV.
+Simple photomosaics program using OpenCV in python. Also contains a web server able to execute the program.
 
 ## PREREQUISITES
 
