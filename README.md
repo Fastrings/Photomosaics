@@ -13,7 +13,6 @@ Simply run ``python photomosaics.py 'input' 'tile_size'``, with 'input' being th
 
 ## PHOTO CREDITS
 
-- Basics Images
-    - All images were taken from this website : [http.cat](https://http.cat/)
 - Source Images
     - Images taken from [T91 Dataset](https://www.kaggle.com/datasets/ll01dm/t91-image-dataset) on Kaggle.
+    - Images taken from [A to Z Flowers - Features & Images](https://www.kaggle.com/datasets/kkhandekar/a-to-z-flowers-features-images) on Kaggle.
