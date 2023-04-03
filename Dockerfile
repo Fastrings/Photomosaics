@@ -6,7 +6,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install opencv-python-headless
+RUN pip install Flask
+RUN pip install numpy
 
 EXPOSE 8080
 
