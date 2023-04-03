@@ -4,8 +4,7 @@ import os, sys
 import multiprocessing
 
 library_path = "Source_Images"
-cache = {}
-num_processes = 4
+num_processes = 10
 
 def load_image(file_path):
     return cv.imread(file_path, cv.IMREAD_UNCHANGED)
@@ -23,22 +22,19 @@ def load_library(tile_size):
 
 def photomosaics(img, tile_size):
     img = cv.resize(img, (img.shape[1] - (img.shape[1] % tile_size), img.shape[0] - (img.shape[0] % tile_size)))
-    
     library = load_library(tile_size)
-    
     if not library:
-        print("Error: Image library is empty.")
-        exit()
-    
-    cache = {file_name: np.mean(image, axis=(0, 1)) for file_name, image in library.items()}
+        raise Exception("Error: Image library is empty.")
     
     output_image = np.zeros_like(img)
+
+    cache = {file_name: np.mean(image, axis=(0, 1)) for file_name, image in library.items()}
 
     for y in range(0, img.shape[0], tile_size):
         for x in range(0, img.shape[1], tile_size):
             tile = img[y:y+tile_size, x:x+tile_size]
             tile_avg_color = np.mean(tile, axis=(0, 1)).astype(int)
-            best_match = min(cache, key=lambda x: np.linalg.norm(tile_avg_color - cache[x]))
+            best_match = min(cache, key=lambda x: np.sum(np.abs(tile_avg_color - cache[x])))
             best_match_image = library[best_match]
             output_image[y:y+tile_size, x:x+tile_size] = best_match_image
     
