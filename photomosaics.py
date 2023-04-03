@@ -24,9 +24,6 @@ def load_library(tile_size):
 def photomosaics(img, tile_size):
     img = cv.resize(img, (img.shape[1] - (img.shape[1] % tile_size), img.shape[0] - (img.shape[0] % tile_size)))
     
-    """library = {file_name: cv.resize(cv.imread(os.path.join(library_path, file_name), cv.IMREAD_UNCHANGED), (tile_size, tile_size))
-               for file_name in os.listdir(library_path)}"""
-    
     library = load_library(tile_size)
     
     if not library:
