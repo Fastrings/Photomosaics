@@ -1,25 +1,39 @@
 import cv2 as cv
 import numpy as np
 import os, sys
+import multiprocessing
 
-library, library_path = {}, "Source_Images"
+library_path = "Source_Images"
 cache = {}
+num_processes = 4
 
+def load_image(file_path):
+    return cv.imread(file_path, cv.IMREAD_UNCHANGED)
+
+def load_library(tile_size):
+    pool = multiprocessing.Pool(processes=num_processes)
+    file_paths = [os.path.join(library_path, file_name) for file_name in os.listdir(library_path)]
+    images = pool.map(load_image, file_paths)
+    pool.close()
+    pool.join()
+
+    library = {os.path.basename(file_path): cv.resize(image, (tile_size, tile_size)) for file_path, image in zip(file_paths, images)}
+
+    return library
 
 def photomosaics(img, tile_size):
     img = cv.resize(img, (img.shape[1] - (img.shape[1] % tile_size), img.shape[0] - (img.shape[0] % tile_size)))
-
-    for file_name in os.listdir(library_path):
-        img_path = os.path.join(library_path, file_name)
-        image = cv.imread(img_path)
-        library[file_name] = cv.resize(image, (tile_size, tile_size))
+    
+    """library = {file_name: cv.resize(cv.imread(os.path.join(library_path, file_name), cv.IMREAD_UNCHANGED), (tile_size, tile_size))
+               for file_name in os.listdir(library_path)}"""
+    
+    library = load_library(tile_size)
     
     if not library:
         print("Error: Image library is empty.")
         exit()
     
-    for file_name in library:
-        cache[file_name] = np.mean(library[file_name], axis=(0, 1)).astype(int)
+    cache = {file_name: np.mean(image, axis=(0, 1)) for file_name, image in library.items()}
     
     output_image = np.zeros_like(img)
 

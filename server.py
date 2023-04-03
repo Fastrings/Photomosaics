@@ -15,11 +15,14 @@ def process_image():
             return Response('No text data provided', status=400)
 
         img = request.files['image'].read()
-        text = request.form['tile_size']
+        tile_size = int(request.form['tile_size'])
+        if tile_size > 500 or tile_size <= 0:
+            raise Exception(f'Invalid tile_size: {tile_size}')
         npimg = np.frombuffer(img, np.uint8)
         
         img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-        img = photomosaics(img, int(text))
+        img = cv2.resize(img, (500, 500))
+        img = photomosaics(img, tile_size)
         _, img_encoded = cv2.imencode('.jpg', img)
         
         img_bytes = io.BytesIO(img_encoded)
