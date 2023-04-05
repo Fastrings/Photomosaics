@@ -2,7 +2,7 @@
 
 Simple photomosaics program using OpenCV in python. Also contains a web server able to execute the program.
 
-![Photomosaics example](https://raw.githubusercontent.com/Fastrings/Photomosaics/master/out.png "Above, the input on the left and the result on the right")
+![Photomosaics example](https://raw.githubusercontent.com/Fastrings/Photomosaics/master/out.png)
 
 ## PREREQUISITES
 
