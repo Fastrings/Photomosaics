@@ -6,7 +6,7 @@ Simple photomosaics program using OpenCV in python. Also contains a web server a
   <img
   src="https://raw.githubusercontent.com/Fastrings/Photomosaics/master/out.png"
   alt="Photomosaics example">
-  <figcaption>Above, the input image on the left and the result on the right, using a tile size of 30</figcaption>
+  <figcaption style="text-align: center;">Above, the input image on the left and the result on the right, using a tile size of 30.</figcaption>
 </figure>
 
 ## PREREQUISITES
@@ -15,7 +15,8 @@ This project uses packages that are not in the python standard library, meaning 
 
 ## HOW TO USE
 
-Add all the images you want to see in the final results to the [source](https://github.com/Fastrings/Photomosaics/tree/master/Source_Images) folder. <br>
+Add all the images you want to see in the final results to the [source](https://github.com/Fastrings/Photomosaics/tree/master/Source_Images) folder.
+
 Simply run:
 
 - ``python photomosaics.py 'input' 'tile_size'`` 
