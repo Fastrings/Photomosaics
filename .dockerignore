@@ -1,0 +1,8 @@
+Dockerfile
+README.md
+test_server.py
+.gitignore
+*.pyc
+*.pyo
+*.pyd
+__pycache__

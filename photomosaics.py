@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 import os, sys
-import multiprocessing
+#import multiprocessing
 
 library_path = "Source_Images"
 num_processes = 10
@@ -10,11 +10,12 @@ def load_image(file_path):
     return cv.imread(file_path, cv.IMREAD_UNCHANGED)
 
 def load_library(tile_size):
-    pool = multiprocessing.Pool(processes=num_processes)
+    #pool = multiprocessing.Pool(processes=num_processes)
     file_paths = [os.path.join(library_path, file_name) for file_name in os.listdir(library_path)]
-    images = pool.map(load_image, file_paths)
-    pool.close()
-    pool.join()
+    #images = pool.map(load_image, file_paths)
+    images = map(load_image, file_paths)
+    #pool.close()
+    #pool.join()
 
     library = {os.path.basename(file_path): cv.resize(image, (tile_size, tile_size)) for file_path, image in zip(file_paths, images)}
 

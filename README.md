@@ -2,6 +2,8 @@
 
 Simple photomosaics program using OpenCV in python. Also contains a web server able to execute the program.
 
+![Photomosaics example](https://raw.githubusercontent.com/Fastrings/Photomosaics/master/out.png "Above, the input on the left and the result on the right")
+
 ## PREREQUISITES
 
 This project uses packages that are not in the python standard library, meaning it is needed to install them (using pip for example). Please refer to the [requirements](requirements.txt) file for a list of all the packages needed to make the project work properly.
@@ -36,7 +38,7 @@ curl -X POST -F 'image=@image.jpg' -F 'tile_size=-1' [url]
 Obviously, don't forget to replace some arguments:
 - image.jpg by the path to your image
 - -1 by an actual tile size you want to use
-- [url] by the url of your own server. By default, this url is: http[]()://localhost:5000/process_image
+- [url] by the url of your own server. By default, this url is: http[]()://localhost:8000/process_image
 
 ## DOCKER
 

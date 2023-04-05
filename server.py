@@ -1,10 +1,14 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template
 import cv2
 import numpy as np
 import io
 from photomosaics import photomosaics
 
 app = Flask(__name__)
+
+@app.route("/", methods=['GET'])
+def hello_world():
+    return render_template('index.html')
 
 @app.route('/process_image', methods=['POST'])
 def process_image():
