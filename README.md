@@ -35,7 +35,7 @@ Simply run:
 python photomosaics.py 'input' 'tile_size'
 ``` 
 
-With 'input' being the path to your input image (only jpg format is supported for now) and 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will longer take to run.
+With 'input' being the path to your input image (only jpeg format is supported for now) and 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will take longer to run.
 
 ## HTTP SERVER
 
