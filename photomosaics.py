@@ -1,42 +1,66 @@
 import cv2 as cv
 import numpy as np
 import os, sys
-#import multiprocessing
+from scipy.spatial import KDTree
 
-library_path = "Source_Images"
-num_processes = 10
+LIBRARY_PATH = "Source_Images"
 
-def load_image(file_path):
-    return cv.imread(file_path, cv.IMREAD_UNCHANGED)
+def color_distance(color1, color2):
+    return np.sqrt(np.sum((np.array(color1) - np.array(color2)) ** 2))
+
+def find_best_match(color, kdtree, library):
+    _, indices = kdtree.query(color)
+    if isinstance(indices, np.int64):
+        indices = [indices]
+    best_match = None
+    best_distance = float('inf')
+    for index in indices:
+        distance = color_distance(color, library[index]['average_color'])
+        if distance < best_distance:
+            best_match = library[index]
+            best_distance = distance
+    
+    return best_match
+
+def load_image(file_path, tile_size):
+    img = cv.imread(file_path, cv.IMREAD_UNCHANGED)
+    return cv.resize(img, (tile_size, tile_size))
+
+def average_color(image):
+    return cv.mean(image)[:3]
 
 def load_library(tile_size):
-    #pool = multiprocessing.Pool(processes=num_processes)
-    file_paths = [os.path.join(library_path, file_name) for file_name in os.listdir(library_path)]
-    #images = pool.map(load_image, file_paths)
-    images = map(load_image, file_paths)
-    #pool.close()
-    #pool.join()
+    file_paths = [os.path.join(LIBRARY_PATH, file_name) for file_name in os.listdir(LIBRARY_PATH)]
+    library = []
+    for file_path in file_paths:
+        entry = {
+            'image': load_image(file_path, tile_size),
+            'average_color': None
+        }
+        library.append(entry)
 
-    library = {os.path.basename(file_path): cv.resize(image, (tile_size, tile_size)) for file_path, image in zip(file_paths, images)}
+    for image_dict in library:
+        image_dict['average_color'] = average_color(image_dict['image'])
 
     return library
 
 def photomosaics(img, tile_size):
     img = cv.resize(img, (img.shape[1] - (img.shape[1] % tile_size), img.shape[0] - (img.shape[0] % tile_size)))
     library = load_library(tile_size)
+    colors = np.array([image_dict['average_color'] for image_dict in library])
+    kdtree = KDTree(colors)
+
     if not library:
         raise Exception("Error: Image library is empty.")
     
     output_image = np.zeros_like(img)
 
-    cache = {file_name: np.mean(image, axis=(0, 1)) for file_name, image in library.items()}
-
     for y in range(0, img.shape[0], tile_size):
         for x in range(0, img.shape[1], tile_size):
             tile = img[y:y+tile_size, x:x+tile_size]
-            tile_avg_color = np.mean(tile, axis=(0, 1)).astype(int)
-            best_match = min(cache, key=lambda x: np.sum(np.abs(tile_avg_color - cache[x])))
-            best_match_image = library[best_match]
+            tile_avg_color = average_color(tile)
+            best_match = find_best_match(tile_avg_color, kdtree, library)
+            best_match_image = best_match['image']
             output_image[y:y+tile_size, x:x+tile_size] = best_match_image
     
     return output_image
