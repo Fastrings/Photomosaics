@@ -39,12 +39,20 @@ With 'input' being the path to your input image and 'tile_size' being the precis
 
 ## HTTP SERVER
 
-This project contains an http server used to run the photomosaic logic. Send a POST request to the /process_image endpoint and the server will include in the response the image resulting from running the photomosaics program. Make sure to include an image and the tile_size of you choosing to the request.
+This project contains an http server used to run the photomosaic logic. Send a POST request to the /process_image endpoint and the server will include in the response the image resulting from running the photomosaics program. Make sure to include an image and the tile_size of your choosing to the request.
 
-To run the server, simply run:
+Running the server works differently depending on the OS you are using.
+
+On Windows, you can install [waitress](https://docs.pylonsproject.org/projects/waitress/) or [mod_wsgiand](https://modwsgi.readthedocs.io/). In development I chose to use the former but if you want to use the latter, please refer to their documentation as there are a few more steps necessary to run the server. You can run waitress like so:
 
 ```bash
-python server.py
+waitress-serve --host 127.0.0.1 --port 8000 server:app
+```
+
+On UNIX, you can install any WSGI server of your choosing. I personnally used [Gunicorn](https://gunicorn.org/) to replace the flask development server in the docker implementation. You can run gunicorn like so:
+
+```bash
+gunicorn --workers 1 --timeout 0 --bind 0.0.0.0:8000 server:app
 ```
 
 It will launch the server in your current terminal window.
@@ -57,7 +65,7 @@ For example, here is a request using cURL:
 curl -X POST -F 'image=@image.jpg' -F 'tile_size=-1' [url]
 ```
 
-Obviously, don't forget to replace some arguments:
+Obviously, don't forget to replace some arguments in the request above:
 - image.jpg by the path to your image
 - -1 by an actual tile size you want to use
 - [url] by the url of your own server. If you use mine, the url is: http[]()://localhost:8000/process_image
