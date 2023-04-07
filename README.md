@@ -1,6 +1,8 @@
 # PHOTOMOSAICS
 
-Simple photomosaics program using OpenCV in python. Also contains a web server able to execute the program.
+Simple photomosaics program using OpenCV in python. 
+
+The photomosaic algorithm is a way to create a large image by using smaller images as tiles. Each tile is chosen to best match the colors of the corresponding section of the large image.
 
 <figure>
   <img
@@ -8,6 +10,16 @@ Simple photomosaics program using OpenCV in python. Also contains a web server a
   alt="Photomosaics example">
   <figcaption style="text-align: center;">Above, the input image on the left and the result on the right, using a tile size of 30.</figcaption>
 </figure>
+
+## HOW IT WORKS
+
+The input image is first resized to be an exact multiple of the tile size.
+
+Then, the library of images is loaded and a [KDTree](https://en.wikipedia.org/wiki/K-d_tree) is constructed from the average colors of the library images. 
+
+A blank output image is created with the same dimensions as the input image. 
+
+The script then loops through each tile in the input image, finds the best matching library image, and pastes the library image onto the corresponding section of the output image.
 
 ## PREREQUISITES
 
@@ -19,7 +31,9 @@ Add all the images you want to see in the final results to the [source](Source_I
 
 Simply run:
 
-- ``python photomosaics.py 'input' 'tile_size'`` 
+```bash
+python photomosaics.py 'input' 'tile_size'
+``` 
 
 With 'input' being the path to your input image and 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will take to run.
 
@@ -29,7 +43,9 @@ This project contains an http server used to run the photomosaic logic. Send a P
 
 To run the server, simply run:
 
-- ``python server.py``
+```bash
+python server.py
+```
 
 It will launch the server in your current terminal window.
 
@@ -37,7 +53,7 @@ Once this is done, you can use any tool of your choosing, like cURL or Postman, 
 
 For example, here is a request using cURL:
 
-```
+```bash
 curl -X POST -F 'image=@image.jpg' -F 'tile_size=-1' [url]
 ```
 
@@ -52,10 +68,17 @@ For this section, you need to have docker installed. Please refer to the [Docker
 
 WARNING: If you also followed the [HTTP Server](#http-server) section, don't forget to stop the server before running the docker container, or make sure that they are not both running on the same port.
 
-Once Docker is installed on your machine, navigate to the root of this project and run the following commands
+Once Docker is installed on your machine, navigate to the root of this project and run the following commands:
 
-- ``docker build -t 'name' . `` -> Building the docker image, with any 'name' you want. Do not forget the '.', it is important.
-- ``docker run -d -p 8000:8000 'name'`` -> Launch a docker container based off the image you created just before. Replace 'name' with the name of the image you just created.
+```bash
+docker build -t 'name' . 
+``` 
+This will build the docker image, with any 'name' you want. Do not forget the '.', it is important.
+
+```bash
+docker run -d -p 8000:8000 'name'
+```
+This launches a docker container based off the image you created just before. Replace 'name' with the name of the image you just created.
 
 ## PHOTO CREDITS
 
