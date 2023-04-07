@@ -33,14 +33,9 @@ def load_library(tile_size):
     file_paths = [os.path.join(LIBRARY_PATH, file_name) for file_name in os.listdir(LIBRARY_PATH)]
     library = []
     for file_path in file_paths:
-        entry = {
-            'image': load_image(file_path, tile_size),
-            'average_color': None
-        }
-        library.append(entry)
-
-    for image_dict in library:
-        image_dict['average_color'] = average_color(image_dict['image'])
+        image = load_image(file_path, tile_size)
+        avg = average_color(image)
+        library.append({'image': image, 'average_color': avg})
 
     return library
 
