@@ -25,8 +25,8 @@ def process_image():
         npimg = np.frombuffer(img, np.uint8)
         
         img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-        img = cv2.resize(img, (500, 500))
         img = photomosaics(img, tile_size)
+        img = cv2.resize(img, (500, 500))
         _, img_encoded = cv2.imencode('.jpg', img)
         
         img_bytes = io.BytesIO(img_encoded)
