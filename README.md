@@ -35,7 +35,7 @@ Simply run:
 python photomosaics.py 'input' 'tile_size'
 ``` 
 
-With 'input' being the path to your input image and 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will take to run.
+With 'input' being the path to your input image (only jpg format is supported for now) and 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will longer take to run.
 
 ## HTTP SERVER
 
@@ -43,7 +43,7 @@ This project contains an http server used to run the photomosaic logic. Send a P
 
 Running the server works differently depending on the OS you are using.
 
-On Windows, you can install [waitress](https://docs.pylonsproject.org/projects/waitress/) or [mod_wsgiand](https://modwsgi.readthedocs.io/). In development I chose to use the former but if you want to use the latter, please refer to their documentation as there are a few more steps necessary to run the server. You can run waitress like so:
+On Windows, you can install [waitress](https://docs.pylonsproject.org/projects/waitress/) or [mod_wsgi](https://modwsgi.readthedocs.io/). In development I chose to use the former but if you want to use the latter, please refer to their documentation as there are a few more steps necessary to run the server. You can run waitress like so:
 
 ```bash
 waitress-serve --host 127.0.0.1 --port 8000 server:app
