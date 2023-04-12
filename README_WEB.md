@@ -82,7 +82,7 @@ Obviously, don't forget to replace some arguments in the request above:
 - image.jpg by the path to your image
 - -1 by an actual tile size you want to use
 - method by the color distance method you want to use. Please refer to the [How-to-use](#how-to-use) section for available methods.
-- format by the output format you want for the image returned by the server. You can choose between 'png' and 'jpg' formats.
+- format by the output format you want for the image returned by the server. You can choose between 'png' and 'jpg' formats. Note that this option is optional and can be omitted. By default, the output image uses jpg format.
 
 ## DOCKER
 
