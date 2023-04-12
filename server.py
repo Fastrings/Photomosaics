@@ -15,9 +15,9 @@ def process_image(img, tile_size, method, format):
     return io.BytesIO(img_encoded)
 
 def get_format(input_format):
-    if input_format is None or input_format == '.jpg':
+    if input_format is None or input_format == 'jpg':
         return '.jpg'
-    elif input_format == '.png':
+    elif input_format == 'png':
         return '.png'
     else:
         raise Exception(f'Invalid format provided: {input_format}')
