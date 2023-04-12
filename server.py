@@ -1,5 +1,4 @@
 from flask import Flask, request, Response, render_template
-from enum import Enum
 import cv2, io
 import numpy as np
 from photomosaics import photomosaics, color_distance_deltaE, color_distance_euclid
