@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, render_template
+from enum import Enum
 import cv2, io
 import numpy as np
 from photomosaics import photomosaics, color_distance_deltaE, color_distance_euclid
@@ -13,32 +14,32 @@ def process_image(img, tile_size, method, format):
     _, img_encoded = cv2.imencode(format, img)
     return io.BytesIO(img_encoded)
 
-def get_format(input):
-    if input is None or input == '.jpg':
+def get_format(input_format):
+    if input_format is None or input_format == '.jpg':
         return '.jpg'
-    elif input == '.png':
+    elif input_format == '.png':
         return '.png'
     else:
-        raise Exception(f'Invalid format provided: {input}')
+        raise Exception(f'Invalid format provided: {input_format}')
 
-def get_method(input):
-    if input == 'deltaE':
+def get_method(input_method):
+    if input_method == 'deltaE':
         return color_distance_deltaE
-    elif input == 'euclid':
+    elif input_method == 'euclid':
         return color_distance_euclid
     else:
-        raise Exception(f'Invalid color distance method provided: {input}')
+        raise Exception(f'Invalid color distance method provided: {input_method}')
     
-def get_content_type(input):
-    if input == '.jpg':
+def get_content_type(input_content):
+    if input_content == '.jpg':
         return 'image/jpeg'
-    elif input == '.png':
+    elif input_content == '.png':
         return 'image/png'
     else:
-        raise Exception(f'File format unknown: {input}')
+        raise Exception(f'File format unknown: {input_content}')
 
-def get_tile_size(input):
-    tile_size = int(input)
+def get_tile_size(input_tile):
+    tile_size = int(input_tile)
     if tile_size > 500 or tile_size <= 0:
             raise Exception(f'Invalid tile_size: {tile_size}')
     
@@ -49,7 +50,7 @@ def hello_world():
     return render_template('index.html')
 
 @app.route('/process_image', methods=['POST'])
-def process_image():
+def process_image_request():
     try:
         if 'image' not in request.files:
             return Response('No image file uploaded', status=400)
@@ -69,7 +70,7 @@ def process_image():
         return Response(img_bytes.getvalue(), content_type=content_type)
         
     except Exception as e:
-        print(f'An exception has occurred: {str(e)}')
+        app.logger.error(f'An exception has occurred: {str(e)}')
         return Response(f'An exception has occurred: {str(e)}', status=500)
 
 if __name__ == '__main__':
