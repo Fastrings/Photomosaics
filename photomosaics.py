@@ -3,6 +3,7 @@ import numpy as np
 import os, sys
 from scipy.spatial import KDTree
 import colorspacious
+import argparse
 
 LIBRARY_PATH = "Source_Images"
 
@@ -66,15 +67,32 @@ def photomosaics(img, tile_size):
     
     return output_image
 
-if __name__ == "__main__":
-    input_img = cv.imread(sys.argv[1])
-    img = photomosaics(input_img, int(sys.argv[2]))
-    img = cv.resize(img, (500, 500))
-    og = cv.imread(sys.argv[1])
-    og = cv.resize(og, (500, 500))
-    cv.imshow('Result', img)
-    cv.imshow('Input image', og)
+def display(input, output):
+    input = cv.resize(input, (500, 500))
+    output = cv.resize(output, (500, 500))
+
+    cv.imshow('Result', output)
+    cv.imshow('Input image', input)
     cv.moveWindow('Input image', 100, 50)
     cv.moveWindow('Result', 625, 50)
     cv.waitKey(0)
     cv.destroyAllWindows()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run a photomosaics program on input image.")
+
+    parser.add_argument("-i", "--input", required=True, help="path to input image")
+    parser.add_argument("-t", "--tile-size", type=int, required=True, help="size of tiles in output image")
+    parser.add_argument("-m", "--method", choices=["euclid", "deltaE"], default='deltaE', help="color distance method to use")
+
+    args = parser.parse_args()
+    filename = args.input
+    tile_size = args.tile_size
+    method = color_distance if args.method == "deltaE" else None
+
+    input_img = cv.imread(filename)
+    img = photomosaics(input_img, tile_size)
+
+    og = cv.imread(filename)
+
+    display(og, img)
