@@ -32,7 +32,7 @@ Beforehand, add all the images you want to see in the final results to the [sour
 To launch the program, simply run:
 
 ```bash
-python photomosaics.py -i 'input' -t 'tile_size' -m 'method'
+$ python photomosaics.py -i 'input' -t 'tile_size' -m 'method'
 ``` 
 
 With:
@@ -43,7 +43,7 @@ With:
 For a more complete description of how to use this program, you can run the following command in the terminal:
 
 ```bash
-python photomosaics.py -h
+$ python photomosaics.py -h
 ```
 
 ## HTTP SERVER
@@ -55,13 +55,13 @@ Running the server works differently depending on the OS you are using.
 On Windows, you can install [waitress](https://docs.pylonsproject.org/projects/waitress/) or [mod_wsgi](https://modwsgi.readthedocs.io/). In development I chose to use the former but if you want to use the latter, please refer to their documentation as there are a few more steps necessary to run the server. You can run waitress like so:
 
 ```bash
-waitress-serve --host 127.0.0.1 --port 8000 server:app
+$ waitress-serve --host 127.0.0.1 --port 8000 server:app
 ```
 
 On UNIX, you can install any WSGI server of your choosing. I personnally used [Gunicorn](https://gunicorn.org/) to replace the flask development server in the docker implementation. You can run gunicorn like so:
 
 ```bash
-gunicorn --workers 1 --timeout 0 --bind 0.0.0.0:8000 server:app
+$ gunicorn --workers 1 --timeout 0 --bind 0.0.0.0:8000 server:app
 ```
 
 It will launch the server in your current terminal window.
@@ -71,13 +71,18 @@ Once this is done, you can use any tool of your choosing, like cURL or Postman, 
 For example, here is a request using cURL:
 
 ```bash
-curl -X POST -F 'image=@image.jpg' -F 'tile_size=-1' [url]
+$ curl -X POST localhost:8000/process_image 
+       -F 'image=@image.jpg'
+       -F 'tile_size=-1'
+       -F 'method=method'
+       -F 'format=format'
 ```
 
 Obviously, don't forget to replace some arguments in the request above:
 - image.jpg by the path to your image
 - -1 by an actual tile size you want to use
-- [url] by the url of your own server. If you use mine, the url is: http[]()://localhost:8000/process_image
+- method by the color distance method you want to use. Please refer to the [How-to-use](#how-to-use) section for available methods.
+- format by the output format you want for the image returned by the server. You can choose between 'png' and 'jpg' formats.
 
 ## DOCKER
 
@@ -88,12 +93,12 @@ WARNING: If you also followed the [HTTP Server](#http-server) section, don't for
 Once Docker is installed on your machine, navigate to the root of this project and run the following commands:
 
 ```bash
-docker build -t 'name' . 
+$ docker build -t 'name' . 
 ``` 
 This will build the docker image, with any 'name' you want. Do not forget the '.', it is important.
 
 ```bash
-docker run -d -p 8000:8000 'name'
+$ docker run -d -p 8000:8000 'name'
 ```
 This launches a docker container based off the image you created just before. Replace 'name' with the name of the image you just created.
 
