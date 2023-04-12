@@ -1,7 +1,6 @@
 from flask import Flask, request, Response, render_template
-import cv2
+import cv2, io
 import numpy as np
-import io
 from photomosaics import photomosaics, color_distance_deltaE, color_distance_euclid
 
 app = Flask(__name__)
@@ -25,7 +24,7 @@ def process_image():
         if tile_size > 500 or tile_size <= 0:
             raise Exception(f'Invalid tile_size: {tile_size}')
         if request.form['method'] not in ["deltaE", "euclid"]:
-            raise Exception(f'Invalid color distance method')
+            raise Exception('Invalid color distance method')
         method = color_distance_deltaE if request.form['method'] == "deltaE" else color_distance_euclid
 
         npimg = np.frombuffer(img, np.uint8)
@@ -37,13 +36,11 @@ def process_image():
         
         img_bytes = io.BytesIO(img_encoded)
         
-        response = Response(img_bytes.getvalue(), content_type='image/jpeg')
-    
-        return response
-    
+        return Response(img_bytes.getvalue(), content_type='image/jpeg')
+        
     except Exception as e:
         print(f'An exception has occurred: {str(e)}')
-        return Response(f'An exception occurred: {str(e)}', status=500)
+        return Response(f'An exception has occurred: {str(e)}', status=500)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

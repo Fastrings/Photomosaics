@@ -1,9 +1,7 @@
+import colorspacious, argparse, os
 import cv2 as cv
 import numpy as np
-import os
 from scipy.spatial import KDTree
-import colorspacious
-import argparse
 
 LIBRARY_PATH = "Source_Images"
 
@@ -86,11 +84,10 @@ if __name__ == "__main__":
 
     parser.add_argument("-i", "--input", required=True, help="path to input image")
     parser.add_argument("-t", "--tile-size", type=int, required=True, help="size of tiles in output image")
-    parser.add_argument("-m", "--method", choices=["euclid", "deltaE"], required=True, default='deltaE', help="color distance method to use")
+    parser.add_argument("-m", "--method", choices=["euclid", "deltaE"], required=True, help="color distance method to use")
 
     args = parser.parse_args()
-    filename = args.input
-    tile_size = args.tile_size
+    filename, tile_size = args.input, args.tile_size
     method = color_distance_deltaE if args.method == "deltaE" else color_distance_euclid
 
     input_img = cv.imread(filename)
