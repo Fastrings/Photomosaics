@@ -1,13 +1,13 @@
 import cv2 as cv
 import numpy as np
-import os, sys
+import os
 from scipy.spatial import KDTree
 import colorspacious
 import argparse
 
 LIBRARY_PATH = "Source_Images"
 
-def color_distance(color1, color2):
+def color_distance_deltaE(color1, color2):
     col1 = [color1[0], color1[1], color1[2]]
     col2 = [color2[0], color2[1], color2[2]]
     col1_lab = colorspacious.cspace_convert(col1, "sRGB255", "CAM02-UCS")
@@ -15,14 +15,17 @@ def color_distance(color1, color2):
 
     return colorspacious.deltaE(col1_lab, col2_lab)
 
-def find_best_match(color, kdtree, library):
+def color_distance_euclid(color1, color2):
+    return np.sqrt(np.sum((np.array(color1) - np.array(color2)) ** 2))
+
+def find_best_match(color, kdtree, library, dist_func):
     _, indices = kdtree.query(color)
     if isinstance(indices, np.int64):
         indices = [indices]
     best_match = None
     best_distance = float('inf')
     for index in indices:
-        distance = color_distance(color, library[index]['average_color'])
+        distance = dist_func(color, library[index]['average_color'])
         if distance < best_distance:
             best_match = library[index]
             best_distance = distance
@@ -46,7 +49,7 @@ def load_library(tile_size):
 
     return library
 
-def photomosaics(img, tile_size):
+def photomosaics(img, tile_size, dist_func):
     img = cv.resize(img, (img.shape[1] - (img.shape[1] % tile_size), img.shape[0] - (img.shape[0] % tile_size)))
     library = load_library(tile_size)
     colors = np.array([image_dict['average_color'] for image_dict in library])
@@ -61,7 +64,7 @@ def photomosaics(img, tile_size):
         for x in range(0, img.shape[1], tile_size):
             tile = img[y:y+tile_size, x:x+tile_size]
             tile_avg_color = average_color(tile)
-            best_match = find_best_match(tile_avg_color, kdtree, library)
+            best_match = find_best_match(tile_avg_color, kdtree, library, dist_func)
             best_match_image = best_match['image']
             output_image[y:y+tile_size, x:x+tile_size] = best_match_image
     
@@ -83,15 +86,15 @@ if __name__ == "__main__":
 
     parser.add_argument("-i", "--input", required=True, help="path to input image")
     parser.add_argument("-t", "--tile-size", type=int, required=True, help="size of tiles in output image")
-    parser.add_argument("-m", "--method", choices=["euclid", "deltaE"], default='deltaE', help="color distance method to use")
+    parser.add_argument("-m", "--method", choices=["euclid", "deltaE"], required=True, default='deltaE', help="color distance method to use")
 
     args = parser.parse_args()
     filename = args.input
     tile_size = args.tile_size
-    method = color_distance if args.method == "deltaE" else None
+    method = color_distance_deltaE if args.method == "deltaE" else color_distance_euclid
 
     input_img = cv.imread(filename)
-    img = photomosaics(input_img, tile_size)
+    img = photomosaics(input_img, tile_size, method)
 
     og = cv.imread(filename)
 
