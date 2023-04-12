@@ -36,7 +36,7 @@ python photomosaics.py -i 'input' -t 'tile_size' -m 'method'
 ``` 
 
 With:
-- 'input' being the path to your input image (only jpeg format is supported for now)
+- 'input' being the path to your input image. Accepted formats : JPEG, PNG.
 - 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will take longer to run.
 - 'method' being the color distance method you want to use. Only 2 are supported as of right now: euclid (for [Euclidean Distance](https://en.wikipedia.org/wiki/Euclidean_distance)) or deltaE (for [delta E color distance](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000)).
 
