@@ -60,7 +60,7 @@ def process_image_request():
             return Response('No color distance method provided', status=400)
         
         img = request.files['image'].read()
-        format = get_format(request.form['format'])
+        format = get_format(request.form.get('format', None))
         method = get_method(request.form['method'])
         tile_size = get_tile_size(request.form['tile_size'])
         
