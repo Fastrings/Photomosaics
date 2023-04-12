@@ -19,7 +19,7 @@ Then, the library of images is loaded and a [KDTree](https://en.wikipedia.org/wi
 
 A blank output image is created with the same dimensions as the input image. 
 
-The script then loops through each tile in the input image, finds the best matching library image using [delta E color distance](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000), and pastes the library image onto the corresponding section of the output image.
+The script then loops through each tile in the input image, finds the best matching library image, and pastes it onto the corresponding section of the output image.
 
 ## PREREQUISITES
 
@@ -27,15 +27,24 @@ This project uses packages that are not in the python standard library, meaning 
 
 ## HOW TO USE
 
-Add all the images you want to see in the final results to the [source](https://github.com/Fastrings/Photomosaics/tree/master/Source_Images) folder.
+Beforehand, add all the images you want to see in the final results to the [source](https://github.com/Fastrings/Photomosaics/tree/master/Source_Images) folder.
 
-Simply run:
+To launch the program, simply run:
 
 ```bash
-python photomosaics.py 'input' 'tile_size'
+python photomosaics.py -i 'input' -t 'tile_size' -m 'method
 ``` 
 
-With 'input' being the path to your input image (only jpeg format is supported for now) and 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will take longer to run.
+With:
+- 'input' being the path to your input image (only jpeg format is supported for now)
+- 'tile_size' being the precision you want to use. Keep in mind that the lower 'tile_size' is, the more precise the output will be, meaning the program will take longer to run.
+- 'method' being the color distance method you want to use. Only 2 are supported as of right now: euclid (for [Euclidean Distance](https://en.wikipedia.org/wiki/Euclidean_distance)) or deltaE (for [delta E color distance](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000)).
+
+For a more complete description of how to use this program, you can run the following command in the terminal:
+
+```bash
+python photomosaics.py -h
+```
 
 ## HTTP SERVER
 
