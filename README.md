@@ -32,7 +32,7 @@ Beforehand, add all the images you want to see in the final results to the [sour
 To launch the program, simply run:
 
 ```bash
-python photomosaics.py -i 'input' -t 'tile_size' -m 'method
+python photomosaics.py -i 'input' -t 'tile_size' -m 'method'
 ``` 
 
 With:
