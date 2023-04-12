@@ -2,11 +2,17 @@ import cv2 as cv
 import numpy as np
 import os, sys
 from scipy.spatial import KDTree
+import colorspacious
 
 LIBRARY_PATH = "Source_Images"
 
 def color_distance(color1, color2):
-    return np.sqrt(np.sum((np.array(color1) - np.array(color2)) ** 2))
+    col1 = [color1[0], color1[1], color1[2]]
+    col2 = [color2[0], color2[1], color2[2]]
+    col1_lab = colorspacious.cspace_convert(col1, "sRGB255", "CAM02-UCS")
+    col2_lab = colorspacious.cspace_convert(col2, "sRGB255", "CAM02-UCS")
+
+    return colorspacious.deltaE(col1_lab, col2_lab)
 
 def find_best_match(color, kdtree, library):
     _, indices = kdtree.query(color)

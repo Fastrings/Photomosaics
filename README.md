@@ -19,7 +19,7 @@ Then, the library of images is loaded and a [KDTree](https://en.wikipedia.org/wi
 
 A blank output image is created with the same dimensions as the input image. 
 
-The script then loops through each tile in the input image, finds the best matching library image, and pastes the library image onto the corresponding section of the output image.
+The script then loops through each tile in the input image, finds the best matching library image using [delta E color distance](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000), and pastes the library image onto the corresponding section of the output image.
 
 ## PREREQUISITES
 
