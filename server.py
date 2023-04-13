@@ -48,6 +48,12 @@ def get_tile_size(input_tile):
 def hello_world():
     return render_template('index.html')
 
+@app.route('/preview', methods=['GET', 'POST'])
+def preview():
+    if request.method == 'POST':
+        return "RESULTS"
+    return render_template('preview.html')
+
 @app.route('/process_image', methods=['POST'])
 def process_image_request():
     try:
