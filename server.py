@@ -52,10 +52,6 @@ def hello_world():
 def preview():
     return render_template('photomosaics.html')
 
-@app.route('/result', methods=['GET', 'POST'])
-def result():
-    return render_template('result.html')
-
 @app.route('/process_image', methods=['POST'])
 def process_image_request():
     try:
