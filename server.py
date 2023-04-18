@@ -45,15 +45,15 @@ def get_tile_size(input_tile):
     return tile_size
 
 @app.route("/", methods=['GET'])
-def hello_world():
-    return render_template('index.html')
-
-@app.route('/photomosaics', methods=['GET'])
-def preview():
+def home():
     return render_template('photomosaics.html')
 
+@app.route('/readme', methods=['GET'])
+def readme():
+    return render_template('readme.html')
+
 @app.route('/process_image', methods=['POST'])
-def process_image_request():
+def process_request():
     try:
         if 'image' not in request.files:
             return Response('No image file uploaded', status=400)
