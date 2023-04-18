@@ -12,41 +12,66 @@
             <span class="navbar-text">
                 <h1 class="display-5">PHOTOMOSAICS</h1>
             </span>
+            <div class="d-flex gap-5">
+                <a class="icon-link" href="{{ url_for('hello_world') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                    </svg>
+                    How to use
+                </a>
+                <a class="icon-link" href="https://github.com/Fastrings/Photomosaics">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    Github repository
+                </a>
+                <a class="icon-link" href="mailto:arthur.launoy88@gmail.com">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                    </svg>
+                    Contact
+                </a>
+            </div>
         </div>
-    </nav>
-    <div class="container">
-        <form action="{{ url_for('process_image_request') }}" method="post" enctype="multipart/form-data" id="form">
-            <div class="row">
-                <div class="col">
-                    <input type="file" name="image" accept="image/*" id="image-input" onchange="previewImage(event)" required><br><br>
-                    Tile size: <input type="number" name="tile_size" required><br><br>
-                    Color distance method: 
-                    <select class="form-select" aria-label="" name="method" required>
-                        <option selected style="display: none;"></option>
-                        <option value="deltaE">Delta E CIE 2000</option>
-                        <option value="euclid">Euclidean distance</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 20 20">
-                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+    </nav><br>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <form action="{{ url_for('process_image_request') }}" method="post" enctype="multipart/form-data" id="form">
+                        <input type="file" name="image" accept="image/*" id="image-input" onchange="previewImage(event)" required><br> <br> <br>
+                        Tile size: <input type="number" name="tile_size" required><br> <br> <br>
+                        Color distance method: 
+                        <select class="form-select" aria-label="" name="method" required>
+                            <option selected style="display: none;"></option>
+                            <option value="deltaE">Delta E CIE 2000</option>
+                            <option value="euclid">Euclidean distance</option>
+                        </select>
+                    </form>
+                </div> <br> <br> <br> <br> <br>
+                <div class="d-grid gap-5 d-md-flex justify-content-center">
+                    <button id="clearImage" type="button" class="btn btn-danger" onclick="clearImage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 20 20">
+                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
                         </svg>
-                        Apply the magic !
+                        Reset inputs
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">
+                        Apply the magic
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 20 20">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
                     </button>
                 </div>
-                <div class="col">
-                    <div class="card mb-3" style="width: 20rem; height: 17rem; vertical-align: middle;">
-                        <div class="card-header text-center">Image preview before processing</div>
-                        <img id="image-preview" class="img-fluid rounded-bottom-1 mx-auto my-auto d-block" alt="" style="max-width: 16rem; max-width: 19rem;">
-                      </div>
+            </div>
+            <div class="col-6">
+                <div class="card" style="width: 45rem; height: 35rem; vertical-align: middle;">
+                    <div class="card-header text-center">Image preview before processing</div>
+                    <img id="image-preview" class="img-fluid rounded-bottom-1 mx-auto my-auto d-block" alt="">
                 </div>
             </div>
-        </form>
-        <button id="clearImage" type="button" class="btn btn-danger" onclick="clearImage()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 20 20">
-                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
-            </svg>
-            Reset
-        </button>
+        </div>
     </div>
 
     <script>
@@ -63,6 +88,9 @@
             var form = document.getElementById('form');
             preview.src = null;
             form.reset();
+        };
+        function submitForm(event) {
+            document.getElementById('form').submit();
         };
 
         var perfEntries = performance.getEntriesByType("navigation");
