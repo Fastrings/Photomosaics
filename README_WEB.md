@@ -1,6 +1,4 @@
-# PHOTOMOSAICS
-
-Simple photomosaics program using OpenCV in python. You can find the github repository [here](https://github.com/Fastrings/Photomosaics).
+Simple photomosaics program using OpenCV in python.
 
 The photomosaic algorithm is a way to create a large image by using smaller images as tiles. Each tile is chosen to best match the colors of the corresponding section of the large image.
 
