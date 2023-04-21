@@ -91,11 +91,27 @@
             form.reset();
         };
         function submitForm(event) {
-            if (document.forms["myForm"]["tile_size"].value != "") {
+            var val = document.forms["myForm"]["tile_size"].value;
+            if (val != "") {
                 document.getElementById('form').submit();
                 document.getElementById('form-btn').disabled = true;
                 document.getElementById('spinner').style.visibility = 'visible';
             }
+            else {
+                var mess = [];
+                mess.push("Some information is missing. More information below:")
+                if (document.myForm.image.value === "") {
+                    mess.push("No image selected.")
+                }
+                if (document.myForm.tile_size.value === "") {
+                    mess.push("No tile_size selected.")
+                }
+                if (document.myForm.method.value === "") {
+                    mess.push("No method selected.")
+                }
+                alert(mess.join('\n\n'));
+                return false;
+            };
         };
 
         var perfEntries = performance.getEntriesByType("navigation");
