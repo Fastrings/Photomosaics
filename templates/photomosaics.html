@@ -63,7 +63,7 @@
                             <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
                         </svg>
                     </button>
-                    <div class="spinner-border text-primary" role="status" style="visibility: visible;" id="spinner"></div>
+                    <div class="spinner-border text-primary" role="status" style="visibility: hidden;" id="spinner"></div>
                 </div>
             </div>
             <div class="col-6">
@@ -91,14 +91,10 @@
             form.reset();
         };
         function submitForm(event) {
-            let form = document.form["myForm"]
-            if (form["tile_size"].value != "") {
+            if (document.forms["myForm"]["tile_size"].value != "") {
                 document.getElementById('form').submit();
                 document.getElementById('form-btn').disabled = true;
                 document.getElementById('spinner').style.visibility = 'visible';
-            }
-            else {
-                form.forE
             }
         };
 
