@@ -91,8 +91,11 @@
             form.reset();
         };
         function submitForm(event) {
-            var val = document.forms["myForm"]["tile_size"].value;
-            if (val != "") {
+            var im = document.forms["myForm"]["image"].value;
+            var ts = document.forms["myForm"]["tile_size"].value;
+            var me = document.forms["myForm"]["method"].value;
+            var isValid = im != "" && ts != "" && me != "";
+            if (isValid) {
                 document.getElementById('form').submit();
                 document.getElementById('form-btn').disabled = true;
                 document.getElementById('spinner').style.visibility = 'visible';
